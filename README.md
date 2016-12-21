@@ -25,6 +25,8 @@ See the test code in pycubicspline.py.
 
 ### 1D spline
 
+This is an example of 1D spline interpolarion.
+
 ```python
 from pycubicspline import * 
 import matplotlib.pyplot as plt
@@ -52,9 +54,9 @@ You can see:
 
 ### 2D spline
 
-On the 1D spline interporation, input x must be increasing.
+On the 1D spline interpolation, input x must be increasing.
 
-It is unuseful for 2D path planning.
+It is unuseful for 2D path planning of robotics.
 
 　
 
@@ -107,8 +109,12 @@ You can get 2D spline path like:
 
 ![1](https://github.com/AtsushiSakai/pycubicspline/blob/master/images/figure_1-2.png)
 
+The orientation(yaw) profile of the path,
+
+and the curvature profile can be calculated:
 
 ![1](https://github.com/AtsushiSakai/pycubicspline/blob/master/images/figure_2.png)
+
 
 ![1](https://github.com/AtsushiSakai/pycubicspline/blob/master/images/figure_3.png)
 
