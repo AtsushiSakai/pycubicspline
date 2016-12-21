@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # --*-- coding:utf-8 --*--
 u"""
-Test
+Test code
 """
 
 import unittest
