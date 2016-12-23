@@ -1,4 +1,7 @@
 # pycubicspline
+
+[![Build Status](https://travis-ci.org/AtsushiSakai/pycubicspline.svg?branch=master)](https://travis-ci.org/AtsushiSakai/pycubicspline)
+
 Simple python cubic spline library 
 
 ![1](https://github.com/AtsushiSakai/pycubicspline/blob/master/images/figure_1-2.png)
