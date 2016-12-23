@@ -4,4 +4,4 @@ python:
   - 3.2
 script:
   - python --version
-  - echo test1
+  - ./test_run.sh
