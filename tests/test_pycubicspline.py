@@ -19,9 +19,9 @@ class Test(unittest.TestCase):
         self.assertEqual(sp.a[2], 6.0)
         self.assertEqual(sp.a[3], 5.0)
 
-        self.assertEqual(sp.b[0], -3.7392857142857139)
-        self.assertEqual(sp.b[1], 4.4785714285714278)
-        self.assertEqual(sp.b[2], 2.6249999999999991)
+        self.assertAlmostEqual(sp.b[0], -3.7392857142857139)
+        self.assertAlmostEqual(sp.b[1], 4.4785714285714278)
+        self.assertAlmostEqual(sp.b[2], 2.6249999999999991)
 
 
 if __name__ == '__main__':
