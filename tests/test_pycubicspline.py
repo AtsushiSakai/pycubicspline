@@ -23,6 +23,11 @@ class Test(unittest.TestCase):
         self.assertAlmostEqual(sp.b[1], 4.4785714285714278)
         self.assertAlmostEqual(sp.b[2], 2.6249999999999991)
 
+        self.assertAlmostEqual(sp.c[0], 0.0)
+        self.assertAlmostEqual(sp.c[1], 16.435714285714283)
+        self.assertAlmostEqual(sp.c[2], -20.142857142857142)
+        self.assertAlmostEqual(sp.c[3], 12.535714285714285)
+
 
 if __name__ == '__main__':
     unittest.main()
