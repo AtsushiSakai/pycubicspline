@@ -109,7 +109,7 @@ class Spline:
         A = np.zeros((self.nx, self.nx))
         A[0, 0] = 1.0
         for i in range(self.nx - 1):
-            if i is not self.nx - 2:
+            if i != (self.nx - 2):
                 A[i + 1, i + 1] = 2.0 * (h[i] + h[i + 1])
             A[i + 1, i] = h[i]
             A[i, i + 1] = h[i]
