@@ -11,6 +11,7 @@ license: MIT
 """
 import math
 import numpy as np
+import bisect
 
 
 class Spline:
@@ -97,10 +98,7 @@ class Spline:
         u"""
         search data segment index
         """
-
-        for i in range(self.nx):
-            if self.x[i] - x > 0:
-                return i - 1
+        return bisect.bisect(self.x, x) - 1
 
     def __calc_A(self, h):
         u"""
