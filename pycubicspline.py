@@ -31,7 +31,6 @@ class Spline:
         A = self.__calc_A(h)
         B = self.__calc_B(h)
         self.c = np.linalg.solve(A, B)
-        #  print(self.c1)
 
         # calc spline coefficient b and d
         for i in range(self.nx - 1):
@@ -92,15 +91,9 @@ class Spline:
         return result
 
     def __search_index(self, x):
-        """
-        search data segment index
-        """
         return bisect.bisect(self.x, x) - 1
 
     def __calc_A(self, h):
-        """
-        calc matrix A for spline coefficient c
-        """
         A = np.zeros((self.nx, self.nx))
         A[0, 0] = 1.0
         for i in range(self.nx - 1):
@@ -140,8 +133,6 @@ class Spline:
         return k
 
 
-
-
 class Spline2D:
     """
     2D Cubic Spline class
@@ -157,7 +148,7 @@ class Spline2D:
         dy = np.diff(y)
         self.ds = [math.sqrt(idx ** 2 + idy ** 2)
                    for (idx, idy) in zip(dx, dy)]
-        s = [0]
+        s = [0.0]
         s.extend(np.cumsum(self.ds))
         return s
 
@@ -191,9 +182,22 @@ class Spline2D:
         return yaw
 
 
-def calc_spline_course(x, y, ds=0.1):
+def calc_spline_course(x, y, num=100):
+    """
+    Calc 2d spline course with interpolation
+
+    :param x: interpolated x positions
+    :param y: interpolated y positions
+    :param num: number of path points
+    :return:
+        - x     : x positions
+        - y     : y positions
+        - yaw   : yaw angle list
+        - k     : curvature list
+        - s     : Path length from start point
+    """
     sp = Spline2D(x, y)
-    s = np.arange(0, sp.s[-1], ds)
+    s = np.linspace(0, sp.s[-1], num+1)[:-1]
 
     r_x, r_y, r_yaw, r_k = [], [], [], []
     for i_s in s:
@@ -203,7 +207,10 @@ def calc_spline_course(x, y, ds=0.1):
         r_yaw.append(sp.calc_yaw(i_s))
         r_k.append(sp.calc_curvature(i_s))
 
-    return r_x, r_y, r_yaw, r_k, s
+    travel = np.cumsum([np.hypot(dx, dy) for dx, dy in zip(np.diff(r_x), np.diff(r_y))]).tolist()
+    travel = np.concatenate([[0.0], travel])
+
+    return r_x, r_y, r_yaw, r_k, travel
 
 
 def test_spline2d():
