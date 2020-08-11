@@ -1,10 +1,11 @@
 #! /usr/bin/python
 # --*-- coding:utf-8 --*--
-u"""
+"""
 Test code
 """
 
 import unittest
+
 import pycubicspline
 
 
