@@ -41,7 +41,7 @@ class Spline:
             self.b.append(tb)
 
     def calc(self, t):
-        u"""
+        """
         Calc position
 
         if t is outside of the input x, return None
@@ -92,13 +92,13 @@ class Spline:
         return result
 
     def __search_index(self, x):
-        u"""
+        """
         search data segment index
         """
         return bisect.bisect(self.x, x) - 1
 
     def __calc_A(self, h):
-        u"""
+        """
         calc matrix A for spline coefficient c
         """
         A = np.zeros((self.nx, self.nx))
@@ -116,7 +116,7 @@ class Spline:
         return A
 
     def __calc_B(self, h):
-        u"""
+        """
         calc matrix B for spline coefficient c
         """
         B = np.zeros(self.nx)
@@ -126,11 +126,25 @@ class Spline:
         #  print(B)
         return B
 
+    def calc_curvature(self, t):
+        j = int(math.floor(t))
+        if j < 0:
+            j = 0
+        elif j >= len(self.a):
+            j = len(self.a) - 1
+
+        dt = t - j
+        df = self.b[j] + 2.0 * self.c[j] * dt + 3.0 * self.d[j] * dt * dt
+        ddf = 2.0 * self.c[j] + 6.0 * self.d[j] * dt
+        k = ddf / ((1 + df ** 2) ** 1.5)
+        return k
+
+
+
 
 class Spline2D:
-    u"""
+    """
     2D Cubic Spline class
-
     """
 
     def __init__(self, x, y):
@@ -148,7 +162,7 @@ class Spline2D:
         return s
 
     def calc_position(self, s):
-        u"""
+        """
         calc position
         """
         x = self.sx.calc(s)
@@ -157,18 +171,18 @@ class Spline2D:
         return x, y
 
     def calc_curvature(self, s):
-        u"""
+        """
         calc curvature
         """
         dx = self.sx.calc_d(s)
         ddx = self.sx.calc_dd(s)
         dy = self.sy.calc_d(s)
         ddy = self.sy.calc_dd(s)
-        k = (ddy * dx - ddx * dy) / (dx ** 2 + dy ** 2)
+        k = (ddy * dx - ddx * dy) / (dx ** 2 + dy ** 2) ** 1.5
         return k
 
     def calc_yaw(self, s):
-        u"""
+        """
         calc yaw
         """
         dx = self.sx.calc_d(s)
