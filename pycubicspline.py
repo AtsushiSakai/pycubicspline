@@ -182,7 +182,7 @@ class Spline2D:
         return yaw
 
 
-def calc_spline_course(x, y, num=100):
+def calc_2d_spline_interpolation(x, y, num=100):
     """
     Calc 2d spline course with interpolation
 
@@ -216,23 +216,14 @@ def calc_spline_course(x, y, num=100):
 def test_spline2d():
     print("Spline 2D test")
     import matplotlib.pyplot as plt
-    x = [-2.5, 0.0, 2.5, 5.0, 7.5, 3.0, -1.0]
-    y = [0.7, -6, 5, 6.5, 0.0, 5.0, -2.0]
+    input_x = [-2.5, 0.0, 2.5, 5.0, 7.5, 3.0, -1.0]
+    input_y = [0.7, -6, 5, 6.5, 0.0, 5.0, -2.0]
 
-    sp = Spline2D(x, y)
-    s = np.arange(0, sp.s[-1], 0.1)
-
-    r_x, r_y, r_yaw, rk = [], [], [], []
-    for i_s in s:
-        ix, iy = sp.calc_position(i_s)
-        r_x.append(ix)
-        r_y.append(iy)
-        r_yaw.append(sp.calc_yaw(i_s))
-        rk.append(sp.calc_curvature(i_s))
+    x, y, yaw, k, travel = calc_2d_spline_interpolation(input_x, input_y, num=200)
 
     plt.subplots(1)
-    plt.plot(x, y, "xb", label="input")
-    plt.plot(r_x, r_y, "-r", label="spline")
+    plt.plot(input_x, input_y, "xb", label="input")
+    plt.plot(x, y, "-r", label="spline")
     plt.grid(True)
     plt.axis("equal")
     plt.xlabel("x[m]")
@@ -240,14 +231,14 @@ def test_spline2d():
     plt.legend()
 
     plt.subplots(1)
-    plt.plot(s, [math.degrees(i_yaw) for i_yaw in r_yaw], "-r", label="yaw")
+    plt.plot(travel, [math.degrees(i_yaw) for i_yaw in yaw], "-r", label="yaw")
     plt.grid(True)
     plt.legend()
     plt.xlabel("line length[m]")
     plt.ylabel("yaw angle[deg]")
 
     plt.subplots(1)
-    plt.plot(s, rk, "-r", label="curvature")
+    plt.plot(travel, k, "-r", label="curvature")
     plt.grid(True)
     plt.legend()
     plt.xlabel("line length[m]")
